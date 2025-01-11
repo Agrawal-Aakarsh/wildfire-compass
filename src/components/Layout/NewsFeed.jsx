@@ -25,7 +25,7 @@ function NewsFeed() {
         })));
         setTotalPages(data.totalPages);
       } catch (err) {
-        setError("Failed to load news");
+        setError("Failed to load news. Upgrade News API plan");
         console.error("News fetch error:", err);
       } finally {
         setLoading(false);

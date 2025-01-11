@@ -22,16 +22,18 @@ function Header() {
             <Button 
               variant="default"
               className="bg-black text-white hover:bg-gray-800 text-xs sm:text-sm px-2 sm:px-4"
-              onClick={() => window.location.href='mailto:your-email@example.com'}
+              onClick={() => window.open('mailto:aakarsh@seas.upenn.edu', '_blank')}
             >
-              <Mail className="mr-1 sm:mr-2 h-4 w-4" />
-              <span className="whitespace-nowrap">Help Improve This</span>
+              <span className="hidden sm:inline">Help Improve This</span>
+              <span className="sm:hidden">Feedback</span>
             </Button>
+            
             <Button 
-              className="bg-blue-500 hover:bg-pink-300 text-white text-xs sm:text-sm px-2 sm:px-4 whitespace-nowrap"
-              onClick={() => window.open('https://www.fire.ca.gov/incidents/', '_blank')}
+              className="text-sm px-2 py-1 sm:px-4 sm:py-2 bg-blue-500 hover:bg-blue-700 text-white whitespace-nowrap"
+              onClick={() => window.open('https://www.fire.ca.gov/', '_blank')}
             >
-              Go to CAL FIRE
+              <span className="hidden sm:inline">Go to CAL FIRE</span>
+              <span className="sm:hidden">CAL FIRE</span>
             </Button>
           </div>
         </div>
