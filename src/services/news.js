@@ -1,72 +1,3 @@
-// // src/services/news.js
-// const NEWS_API_KEY = import.meta.env.VITE_NEWS_API_KEY;
-// const NEWS_API_BASE_URL = 'https://newsapi.org/v2';
-
-// // Define trusted news sources
-// const TRUSTED_SOURCES = [
-//   'bbc-news',
-//   'cnn',
-//   'the-washington-post',
-//   'the-new-york-times',
-//   'associated-press',
-//   'reuters',
-//   'los-angeles-times',
-//   'abc-news',
-//   'cbs-news',
-//   'nbc-news'
-// ].join(',');
-
-// export const newsService = {
-//   getLatestNews: async (page = 1) => {
-//     try {
-//       // Using multiple relevant search terms for better coverage
-//       const searchTerms = '(wildfire OR fire OR "cal fire" OR evacuation) AND ("los angeles" OR "LA" OR "southern california" OR "pacific palisades" OR "brentwood")';
-      
-//       const response = await fetch(
-//         `${NEWS_API_BASE_URL}/everything?` + 
-//         `q=${encodeURIComponent(searchTerms)}` +
-//         `&domains=bbc.com,cnn.com,nytimes.com,washingtonpost.com,latimes.com,apnews.com,reuters.com` +
-//         `&sources=${TRUSTED_SOURCES}` +
-//         `&language=en` +
-//         `&sortBy=publishedAt` +
-//         `&pageSize=3` +
-//         `&page=${page}` +
-//         `&apiKey=${NEWS_API_KEY}`
-//       );
-
-//       if (!response.ok) {
-//         throw new Error('Failed to fetch news');
-//       }
-
-//       const data = await response.json();
-      
-//       // Additional filter to ensure relevance and recency
-//       const filteredArticles = data.articles
-//         .filter(article => {
-//           const isRecent = new Date(article.publishedAt) >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-//           const isValidArticle = article.title && 
-//                                 article.source && 
-//                                 article.source.name && 
-//                                 article.title !== '[Removed]' &&
-//                                 !article.title.includes('[Removed]') &&
-//                                 article.source.name !== '[Removed]' &&
-//                                 !article.source.name.includes('[Removed]');
-          
-//           return isRecent && isValidArticle;
-//         })
-//         .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)); // Ensure newest first
-
-//       return {
-//         articles: filteredArticles,
-//         totalResults: data.totalResults
-//       };
-//     } catch (error) {
-//       console.error('Error fetching news:', error);
-//       throw error;
-//     }
-//   }
-// };
-
 // src/services/news.js
 const NEWS_API_KEY = import.meta.env.VITE_NEWS_API_KEY;
 const NEWS_API_BASE_URL = 'https://newsapi.org/v2';
@@ -110,7 +41,7 @@ export const newsService = {
         );
 
         if (!response.ok) {
-          throw new Error('Failed to fetch news');
+          throw new Error('Failed to fetch news. Upgrade Plan');
         }
 
         const data = await response.json();
