@@ -1,6 +1,6 @@
 // src/services/api.js
 const API_BASE_URL = 'https://firms.modaps.eosdis.nasa.gov/api/area/csv';
-const API_KEY = meta.env.VITE_NASA_FIRMS_API_KEY;
+const API_KEY = import.meta.env.VITE_NASA_FIRMS_API_KEY;
 
 // California bounding box
 const CA_BOUNDS = {
