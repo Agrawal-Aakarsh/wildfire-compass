@@ -9,6 +9,7 @@ import SocialFeed from './components/Layout/SocialFeed'
 import ResourcesSection from './components/Layout/ResourcesSection'
 import Footer from './components/Layout/Footer'
 import { useStats } from './hooks/useStats'
+import { Analytics } from "@vercel/analytics/react"
 
 // Dashboard component to keep App.jsx clean
 function Dashboard({ stats }) {
@@ -76,6 +77,7 @@ function App() {
           <Route path="/inventory" element={<InventoryForm />} />
         </Routes>
         <Footer />
+        <Analytics />
       </div>
     </Router>
   )
