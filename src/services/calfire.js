@@ -1,38 +1,3 @@
-// // src/services/calfire.js
-// export const calFireService = {
-//     async getIncidentData() {
-//       try {
-//         const response = await fetch('https://www.fire.ca.gov/incidents');
-//         const html = await response.text();
-  
-//         const parser = new DOMParser();
-//         const doc = parser.parseFromString(html, 'text/html');
-  
-//         // Get the stats directly from the top section
-//         const acres = doc.querySelector('h2:contains("Acres Burned")').previousElementSibling?.textContent || '0';
-//         const structures = doc.querySelector('h2:contains("Structures Destroyed")').previousElementSibling?.textContent || '0';
-  
-//         // Clean up the numbers
-//         const cleanAcres = parseInt(acres.replace(/,/g, ''));
-//         const cleanStructures = parseInt(structures.replace(/,|\+/g, ''));
-  
-//         console.log('Scraped CAL FIRE data:', { cleanAcres, cleanStructures });
-  
-//         return {
-//           fireArea: cleanAcres > 0 ? `${cleanAcres.toLocaleString()} acres` : 'No Data',
-//           structuresThreatened: cleanStructures > 0 ? cleanStructures.toLocaleString() : 'No Data'
-//         };
-//       } catch (error) {
-//         console.error('Error scraping CAL FIRE data:', error);
-//         // For demo/development, return the hardcoded values from the screenshot
-//         return {
-//           fireArea: '35,999 acres',
-//           structuresThreatened: '12,300'
-//         };
-//       }
-//     }
-//   };
-// src/services/calfire.js
 // src/services/calfire.js
 // Using allorigins.win as it's a reliable CORS proxy
 const PROXY_URL = 'https://api.allorigins.win/raw?url=';
@@ -42,7 +7,7 @@ export const calFireService = {
   async getIncidentStats() {
     try {
       const proxyUrl = PROXY_URL + encodeURIComponent(CAL_FIRE_URL);
-      console.log('Fetching from URL:', proxyUrl);
+      //console.log('Fetching from URL:', proxyUrl);
       
       const response = await fetch(proxyUrl);
       

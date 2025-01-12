@@ -5,7 +5,6 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs))
 }
 
-// Add this to your existing utils
 Date.prototype.toRelative = function() {
   const now = new Date();
   const diffMs = now - this;

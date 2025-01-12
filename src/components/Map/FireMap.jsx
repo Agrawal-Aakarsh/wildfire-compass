@@ -22,7 +22,6 @@ function FireMap() {
     if (map.current || !mapContainer.current) return;
 
     try {
-      console.log('Initializing map with token:', mapboxgl.accessToken);
       
       map.current = new mapboxgl.Map({
         container: mapContainer.current,

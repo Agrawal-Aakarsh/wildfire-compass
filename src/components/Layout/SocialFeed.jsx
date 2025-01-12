@@ -9,19 +9,44 @@ function SocialFeed() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Fallback data in case BlueSky is down
+  const fallbackUpdates = [
+    {
+      author: "@CAL_FIRE",
+      displayName: "CAL FIRE",
+      content: "For the latest official fire updates, please visit fire.ca.gov",
+      time: "Just now"
+    },
+    {
+      author: "@CalOES",
+      displayName: "Cal OES",
+      content: "Stay prepared and have an evacuation plan ready. Visit caloes.ca.gov for emergency preparedness guides.",
+      time: "1h ago"
+    },
+    {
+      author: "@NWS",
+      displayName: "NWS Los Angeles",
+      content: "Monitor local weather conditions and fire warnings at weather.gov",
+      time: "2h ago"
+    }
+  ];
+
+
   useEffect(() => {
     const fetchUpdates = async () => {
       try {
         setLoading(true);
         const posts = await blueskyService.getLatestPosts();
-        setUpdates(posts.map(post => ({
+        const formattedPosts = posts.map(post => ({
           author: post.author,
           displayName: post.displayName,
           content: post.content,
           time: new Date(post.timestamp).toRelative(),
           id: post.id
-        })));
+        }));
+        setUpdates(formattedPosts.length > 0 ? formattedPosts : fallbackUpdates);
       } catch (err) {
+        setUpdates(fallbackUpdates);
         setError("Failed to load social updates");
         console.error("Social feed error:", err);
       } finally {
@@ -65,10 +90,6 @@ function SocialFeed() {
             <div className="flex items-center justify-center h-full">
               <LoadingSpinner />
             </div>
-          ) : updates.length === 0 ? (
-            <div className="flex items-center justify-center h-full text-gray-500">
-              No social updates available
-            </div>
           ) : (
             updates.map((update, index) => (
               <div key={update.id || index} className="p-4 hover:bg-gray-50">
@@ -84,6 +105,7 @@ function SocialFeed() {
       </CardContent>
     </Card>
   )
+
 }
 
 export default SocialFeed

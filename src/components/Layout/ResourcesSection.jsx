@@ -9,8 +9,7 @@ function ResourcesSection() {
       icon: Phone,
       items: [
         { label: "Emergency (Fire/Medical)", value: "911" },
-        { label: "CAL FIRE General Contact", value: "1-916-653-5123" },
-        // { label: "Fire Information Line", value: "1-XXX-XXX-XXXX" }
+        { label: "CAL FIRE General Contact", value: "1-916-653-5123" }
       ]
     },
     {
@@ -23,12 +22,6 @@ function ResourcesSection() {
           href: "https://news.caloes.ca.gov/shelters-available-for-communities-impacted-by-wildfires-in-southern-california-2/",
           target: "_blank"
         },
-        // { 
-        //   label: "Evacuation Routes", 
-        //   value: "View routes",
-        //   href: "#",
-        //   target: "_blank"
-        // },
         { 
           label: "Emergency Alerts", 
           value: "Sign up for alerts",

@@ -9,11 +9,9 @@ const LA_LON = -118.2437;
 export const weatherService = {
   async getAirQuality() {
     try {
-      // Test the API key
-      console.log('Using OpenWeather API Key:', API_KEY);
       
       const url = `${BASE_URL}/air_pollution?lat=${LA_LAT}&lon=${LA_LON}&appid=${API_KEY}`;
-      console.log('Fetching air quality from:', url);
+      //console.log('Fetching air quality from:', url);
       
       const response = await fetch(url);
       
