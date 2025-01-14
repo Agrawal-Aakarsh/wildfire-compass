@@ -10,33 +10,63 @@ const CA_BOUNDS = {
   north: 42.009
 };
 
+const SOURCES = ['VIIRS_SNPP_NRT', 'MODIS_NRT', 'MODIS_SP', 'VIIRS_NOAA21_NRT'];
+
 export const fireService = {
   async getFireData({ start }) {
     try {
-      // Just use MODIS_NRT as it seems to have the best data for the LA area
-      const source = 'MODIS_NRT';
       const areaCoords = `${CA_BOUNDS.west},${CA_BOUNDS.south},${CA_BOUNDS.east},${CA_BOUNDS.north}`;
-      const url = `${API_BASE_URL}/${API_KEY}/${source}/${areaCoords}/3/${start}`;
-      
-      console.log('Fetching from URL:', url);
-      const response = await fetch(url);
-      
-      if (!response.ok) {
-        const text = await response.text();
-        throw new Error(`Failed to fetch fire data: ${text}`);
-      }
+      const fetchPromises = SOURCES.map(source => {
+        const url = `${API_BASE_URL}/${API_KEY}/${source}/${areaCoords}/8/${start}`;
+        //console.log('Fetching from URL:', url);
+        return fetch(url).then(response => {
+          if (!response.ok) {
+            return response.text().then(text => {
+              throw new Error(`Failed to fetch fire data from ${source}: ${text}`);
+            });
+          }
+          return response.text();
+        });
+      });
 
-      const csv = await response.text();
-      console.log('Raw CSV response:', csv);
-      const parsed = parseFireData(csv);
-      console.log('Parsed fire data:', parsed);
-      return parsed;
+      const csvResponses = await Promise.all(fetchPromises);
+      const combinedData = csvResponses.flatMap(csv => parseFireData(csv));
+      console.log('Combined fire data:', combinedData);
+      return combinedData;
     } catch (error) {
       console.error('Error fetching fire data:', error);
       throw error;
     }
   }
 };
+
+// export const fireService = {
+//   async getFireData({ start }) {
+//     try {
+//       // Just use  as it seems to have the best data for the LA area
+//       const source = 'VIIRS_SNPP_NRT';
+//       const areaCoords = `${CA_BOUNDS.west},${CA_BOUNDS.south},${CA_BOUNDS.east},${CA_BOUNDS.north}`;
+//       const url = `${API_BASE_URL}/${API_KEY}/${source}/${areaCoords}/8/${start}`;
+      
+//       console.log('Fetching from URL:', url);
+//       const response = await fetch(url);
+      
+//       if (!response.ok) {
+//         const text = await response.text();
+//         throw new Error(`Failed to fetch fire data: ${text}`);
+//       }
+
+//       const csv = await response.text();
+//       console.log('Raw CSV response:', csv);
+//       const parsed = parseFireData(csv);
+//       console.log('Parsed fire data:', parsed);
+//       return parsed;
+//     } catch (error) {
+//       console.error('Error fetching fire data:', error);
+//       throw error;
+//     }
+//   }
+// };
 
 function parseFireData(csv) {
   if (!csv || typeof csv !== 'string') {
